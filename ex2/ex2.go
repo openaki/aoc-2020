@@ -19,11 +19,12 @@ func ValidatePasswordsA(inputs []string) int {
 		lowerCount, err := strconv.Atoi(matchString[1])
 
 		if err != nil {
-			panic("lower count failed to parse")
+			log.Fatalf("Failed to parse lower coun: %vt", err)
 		}
 		upperCount, err := strconv.Atoi(matchString[2])
+
 		if err != nil {
-			panic("upper count failed to parse")
+			log.Fatalf("Failed to parse upper count: %v", err)
 		}
 
 		pattern, password := matchString[3], matchString[4]
@@ -38,6 +39,7 @@ func ValidatePasswordsA(inputs []string) int {
 
 	return acceptedCount
 }
+
 func ValidatePasswordsB(inputs []string) int {
 
 	re := regexp.MustCompile("(\\d+)-(\\d+) ([^:]*): ([^ ]*)")
@@ -48,23 +50,25 @@ func ValidatePasswordsB(inputs []string) int {
 		index1, err := strconv.Atoi(matchString[1])
 
 		if err != nil {
-			panic("lower count failed to parse")
+			log.Fatal(err)
 		}
+
 		index2, err := strconv.Atoi(matchString[2])
 		if err != nil {
-			panic("upper count failed to parse")
+			log.Fatal(err)
 		}
 
 		pattern, password := matchString[3][0], matchString[4]
 
 		matchFound := 0
-		if password[index1 - 1] == pattern {
+
+		if password[index1-1] == pattern {
 			matchFound++
 		}
-		if password[index2 - 1] == pattern {
+		if password[index2-1] == pattern {
 			matchFound++
 		}
-		if matchFound == 1{
+		if matchFound == 1 {
 			acceptedCount++
 		}
 	}
